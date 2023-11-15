@@ -21,12 +21,12 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                 # TASK 1: Add a dropdown list to enable Launch Site selection
                                 # The default select value is for ALL sites
                                 # dcc.Dropdown(id='site-dropdown',...)
-                                dcc.Dropdown(id='site dropdown',
+                                dcc.Dropdown(id='site-dropdown',
                                                 options=[
                                                     {'label': 'All Sites', 'value':'ALL'},
                                                     {'label': 'CCAFS LC-40', 'value': 'CCAFS LC-40'},
                                                     {'label': 'CCAFS SLC-40', 'value': 'CCAFS SLC-40'},
-                                                    {'label': 'KSC LC39A', 'value': 'KSX LX-39A'},
+                                                    {'label': 'KSC LC-39A', 'value': 'KSX LX-39A'},
                                                     {'label': 'VAFB SLC-4E', 'value': 'VAFB SLC-4E'},
                                                 ],
                                                 value='ALL',
@@ -75,7 +75,7 @@ def get_pie_chart(entered_site):
               Input(component_id='payload-slider', component_property='value')])
 def get_scatter_chart(entered_site, slider_range):
     low, high = slider_range
-    mask = (spacex_df['Payload Mass (kg)'] > low) & (spacex_df['Payload mass (kg)'] < high)
+    mask = (spacex_df['Payload Mass (kg)'] > low) & (spacex_df['Payload Mass (kg)'] < high)
     filtered_df1 = spacex_df[mask]
     if entered_site =='ALL':
         fig = px.scatter(filtered_df1, x='Payload Mass (kg)', y='class', color='Booster Version Category',
@@ -83,7 +83,7 @@ def get_scatter_chart(entered_site, slider_range):
         return fig
     else:
         filtered_df2= filtered_df1[filtered_df1['Launch Site'] == entered_site]
-        fig = px.scatter(filtered_df2, x='Payload Mass (kg)', y='Class', color='Booster Version Category',
+        fig = px.scatter(filtered_df2, x='Payload Mass (kg)', y='class', color='Booster Version Category',
         title=f'Correlation of Payload and Successful Missions for site {entered_site}')
         return fig
 
